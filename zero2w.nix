@@ -8,7 +8,8 @@
     ./sd-image.nix
   ];
 
-  nixpkgs.hostPlatform = "aarch64-linux";
+  nixpkgs.hostPlatform.system = "aarch64-linux";
+  nixpkgs.buildPlatform.system = "x86_64-linux";
   # ! Need a trusted user for deploy-rs.
   nix.settings.trusted-users = ["@wheel"];
   system.stateVersion = "23.11";
