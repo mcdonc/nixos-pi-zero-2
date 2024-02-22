@@ -64,8 +64,8 @@
       interfaces = ["wlan0"];
       # ! Change the following to connect to your own network
       networks = {
-        "<ssid>" = {
-          psk = "<ssid-key>";
+        "ytvid-rpi" = { # SSID
+          psk = "ytvid-rpi"; # password
         };
       };
     };
