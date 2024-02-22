@@ -78,13 +78,17 @@
   services.timesyncd.enable = true;
 
   # ! Change the following configuration
-  users.users.bob = {
+  users.users.chrism = {
     isNormalUser = true;
-    home = "/home/bob";
-    description = "Bob";
+    home = "/home/chrism";
+    description = "Chris McDonough";
     extraGroups = ["wheel" "networkmanager"];
     # ! Be sure to put your own public key here
-    openssh.authorizedKeys.keys = ["a public key"];
+    openssh = {
+      authorizedKeys.keys = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOLXUsGqUIEMfcXoIiiItmGNqOucJjx5D6ZEE3KgLKYV ednesia"
+      ];
+    };
   };
 
   security.sudo = {
@@ -92,5 +96,5 @@
     wheelNeedsPassword = false;
   };
   # ! Be sure to change the autologinUser.
-  services.getty.autologinUser = "bob";
+  services.getty.autologinUser = "chrism";
 }
