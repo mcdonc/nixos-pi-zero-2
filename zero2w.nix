@@ -50,7 +50,7 @@
     loader = {
       grub.enable = false;
       generic-extlinux-compatible.enable = true;
-      timeout = 5;
+      timeout = 2;
     };
 
     # Avoids warning: mdadm: Neither MAILADDR nor PROGRAM has been set. This will cause the `mdmon` service to crash.
