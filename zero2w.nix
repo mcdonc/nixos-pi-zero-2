@@ -58,6 +58,18 @@
     swraid.enable = lib.mkForce false;
   };
 
+  system.build.dtb = pkgs.runCommand "pi4.dtb" {
+    nativeBuildInputs = [ pkgs.dtc ]; } ''
+    dtc -I dts -O dtb -o "$out" ${pkgs.writeText "pi4.dts" ''
+      /include/ "${./pi4.dts}"
+      / {
+        chosen {
+          bootcmd = "sysboot mmc 0:2 any 0x04500000 /boot/extlinux/extlinux.conf";
+        };
+      };
+    ''}
+  '';
+
   networking = {
     interfaces."wlan0".useDHCP = true;
     wireless = {
