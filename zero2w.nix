@@ -12,7 +12,7 @@
   nixpkgs.buildPlatform.system = "x86_64-linux";
   # ! Need a trusted user for deploy-rs.
   nix.settings.trusted-users = ["@wheel"];
-  system.stateVersion = "23.11";
+  system.stateVersion = "24.05";
 
   zramSwap = {
     enable = true;
