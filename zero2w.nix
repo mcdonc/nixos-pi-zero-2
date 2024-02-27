@@ -14,13 +14,15 @@
   nix.settings.trusted-users = ["@wheel"];
   system.stateVersion = "24.05";
 
-  zramSwap = {
+  services.zram-generator = {
     enable = true;
-    algorithm = "zstd";
+    settings.zram0 = {
+      compression-algorithm = "zstd";
+      zram-size = "ram * 2";
+    };
   };
 
   sdImage = {
-    # bzip2 compression takes loads of time with emulation, skip it. Enable this if you're low on space.
     compressImage = false;
     imageName = "zero2.img";
 
@@ -28,7 +30,9 @@
       # Give up VRAM for more Free System Memory
       # - Disable camera which automatically reserves 128MB VRAM
       start_x = 0;
-      # - Reduce allocation of VRAM to 16MB minimum for non-rotated (32MB for rotated)
+
+      # Reduce allocation of VRAM to 16MB minimum for non-rotated
+      # (32MB for rotated)
       gpu_mem = 16;
 
       # Configure display to 800x600 so it fits on most screens
@@ -47,13 +51,19 @@
     # kernelPackages = pkgs.linuxKernel.packages.linux_rpi3;
 
     initrd.availableKernelModules = ["xhci_pci" "usbhid" "usb_storage"];
+
     loader = {
       grub.enable = false;
       generic-extlinux-compatible.enable = true;
       timeout = 2;
     };
 
-    # Avoids warning: mdadm: Neither MAILADDR nor PROGRAM has been set. This will cause the `mdmon` service to crash.
+    # https://artemis.sh/2023/06/06/cross-compile-nixos-for-great-good.html
+    # for deploy-rs
+    # binfmt.emulatedSystems = [ "x86_64-linux" ];
+
+    # Avoids warning: mdadm: Neither MAILADDR nor PROGRAM has been set.
+    # This will cause the `mdmon` service to crash.
     # See: https://github.com/NixOS/nixpkgs/issues/254807
     swraid.enable = lib.mkForce false;
   };
@@ -98,4 +108,37 @@
   };
   # ! Be sure to change the autologinUser.
   services.getty.autologinUser = "chrism";
+
+ environment.systemPackages = with pkgs; [
+    htop
+    vim
+    emacs
+    ripgrep
+    btop
+    (python311.withPackages (p:
+      with p; [
+        python311Packages.rpi-gpio
+        python311Packages.gpiozero
+        python311Packages.pyserial
+      ]))
+    usbutils
+    tmux
+    git
+    dig
+    tree
+    bintools
+    lsof
+    pre-commit
+    file
+    bat
+    ethtool
+    minicom
+    fast-cli
+    nmap
+    openssl
+    dtc
+    zstd
+    neofetch
+  ];
+
 }
