@@ -27,6 +27,8 @@
           hostname = "zero2w";
           profiles.system.path =
             deploy-rs.lib.aarch64-linux.activate.nixos self.nixosConfigurations.zero2w;
+          #remoteBuild = true;
+
         };
       };
     };
