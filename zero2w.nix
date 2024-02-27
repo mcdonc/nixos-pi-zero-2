@@ -47,9 +47,6 @@
   hardware.firmware = [pkgs.raspberrypiWirelessFirmware];
 
   boot = {
-    # TODO doesn't work
-    # kernelPackages = pkgs.linuxKernel.packages.linux_rpi3;
-
     initrd.availableKernelModules = ["xhci_pci" "usbhid" "usb_storage"];
 
     loader = {
@@ -69,7 +66,27 @@
   };
 
   networking = {
-    interfaces."wlan0".useDHCP = true;
+  };
+
+  services.dnsmasq.enable = true;
+  
+  networking = {
+    #interfaces."wlan0".useDHCP = true;
+    interfaces.wlan0 = {
+      ipv4.addresses = [
+        {
+          address = "192.168.1.171";
+          prefixLength = 24;
+        }
+      ];
+    };
+    # dnsmasq reads /etc/resolv.conf to find 8.8.8.8 and 1.1.1.1
+    nameservers =  [ "127.0.0.1" "8.8.8.8" "1.1.1.1"];
+    useDHCP = false;
+    dhcpcd.enable = false;
+    defaultGateway = "192.168.1.1";
+    hostName = "nixos-pi";
+    firewall.enable = false;
     wireless = {
       enable = true;
       interfaces = ["wlan0"];
@@ -112,33 +129,33 @@
  environment.systemPackages = with pkgs; [
     htop
     vim
-    emacs
-    ripgrep
-    btop
-    (python311.withPackages (p:
-      with p; [
-        python311Packages.rpi-gpio
-        python311Packages.gpiozero
-        python311Packages.pyserial
-      ]))
-    usbutils
-    tmux
-    git
-    dig
-    tree
-    bintools
-    lsof
-    pre-commit
-    file
-    bat
-    ethtool
-    minicom
-    fast-cli
-    nmap
-    openssl
-    dtc
-    zstd
-    neofetch
+    # emacs
+    # ripgrep
+    # btop
+    # (python311.withPackages (p:
+    #   with p; [
+    #     python311Packages.rpi-gpio
+    #     python311Packages.gpiozero
+    #     python311Packages.pyserial
+    #   ]))
+    # usbutils
+    # tmux
+    # git
+    # dig
+    # tree
+    # bintools
+    # lsof
+    # pre-commit
+    # file
+    # bat
+    # ethtool
+    # minicom
+    # fast-cli
+    # nmap
+    # openssl
+    # dtc
+    # zstd
+    # neofetch
   ];
 
 }
