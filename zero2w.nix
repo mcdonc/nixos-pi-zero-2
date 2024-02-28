@@ -3,7 +3,40 @@
   modulesPath,
   pkgs,
   ...
-}: {
+}:
+let
+  breakonthru = pkgs.python3Packages.buildPythonPackage {
+    pname="breakonthru";
+    version="0.0";
+    src = pkgs.fetchFromGitHub {
+      owner = "mcdonc";
+      repo = "breakonthru";
+      rev = "00854bd73404f449db0eb5b21da517c07cc617a7";
+      sha256 = "sha256-52u9M05855AJ47Dk1+Fvc+VileaVsX6ClCdpn3N43eA=";
+    };
+  };
+  python_with_packages = (pkgs.python311.withPackages (p:
+    with p; [
+      pkgs.python311Packages.rpi-gpio
+      pkgs.python311Packages.gpiozero
+      pkgs.python311Packages.pyserial
+      pkgs.python311Packages.plaster-pastedeploy
+      pkgs.python311Packages.pyramid
+      pkgs.python311Packages.pyramid-chameleon
+      pkgs.python311Packages.waitress
+      pkgs.python311Packages.bcrypt
+      pkgs.python311Packages.websockets
+      pkgs.python311Packages.gpiozero
+      pkgs.python311Packages.pexpect
+      pkgs.python311Packages.setproctitle
+      pkgs.python311Packages.requests
+      pkgs.python311Packages.websocket-client
+      pkgs.python311Packages.supervisor
+      pkgs.python311Packages.pjsua2
+      breakonthru
+    ]));
+in
+{
   imports = [
     ./sd-image.nix
   ];
@@ -48,6 +81,28 @@
   # Keep this to make sure wifi works
   hardware.enableRedistributableFirmware = lib.mkForce false;
   hardware.firmware = [pkgs.raspberrypiWirelessFirmware];
+  hardware = {
+    raspberry-pi."4".apply-overlays-dtmerge.enable = true;
+    deviceTree = {
+      enable = true;
+      filter = "*rpi-4-*.dtb";
+    };
+  };
+
+  users.groups.gpio = {};
+
+  # services.udev.extraRules = ''
+  #   SUBSYSTEM=="bcm2835-gpiomem", KERNEL=="gpiomem", GROUP="gpio",MODE="0660"
+  #   SUBSYSTEM=="gpio", KERNEL=="gpiochip*", ACTION=="add", RUN+="${pkgs.bash}/bin/bash -c 'chown root:gpio /sys/class/gpio/export /sys/class/gpio/unexport ; chmod 220 /sys/class/gpio/export /sys/class/gpio/unexport'"
+  #   SUBSYSTEM=="gpio", KERNEL=="gpio*", ACTION=="add",RUN+="${pkgs.bash}/bin/bash -c 'chown root:gpio /sys%p/active_low /sys%p/direction /sys%p/edge /sys%p/value ; chmod 660 /sys%p/active_low /sys%p/direction /sys%p/edge /sys%p/value'"
+  # '';
+
+  # https://raspberrypi.stackexchange.com/questions/40105/access-gpio-pins-without-root-no-access-to-dev-mem-try-running-as-root
+  services.udev.extraRules = ''
+    KERNEL=="gpiomem", GROUP="gpio", MODE="0660"
+    SUBSYSTEM=="gpio", KERNEL=="gpiochip*", ACTION=="add", PROGRAM="${pkgs.bash}/bin/bash -c '${pkgs.coreutils}/bin/chgrp -R gpio /sys/class/gpio && ${pkgs.coreutils}/bin/chmod -R g=u /sys/class/gpio'"
+    SUBSYSTEM=="gpio", ACTION=="add", PROGRAM="${pkgs.bash}/bin/bash -c '${pkgs.coreutils}/bin/chgrp -R gpio /sys%p && ${pkgs.coreutils}/bin/chmod -R g=u /sys%p'"
+  '';
 
   boot = {
     initrd.availableKernelModules = ["xhci_pci" "usbhid" "usb_storage"];
@@ -69,7 +124,7 @@
   };
 
   services.dnsmasq.enable = true;
-  
+
   networking = {
     #interfaces."wlan0".useDHCP = true;
     interfaces.wlan0 = {
@@ -85,7 +140,7 @@
     useDHCP = false;
     dhcpcd.enable = false;
     defaultGateway = "192.168.1.1";
-    hostName = "nixos-pi";
+    hostName = "locknix";
     firewall.enable = false;
     wireless = {
       enable = true;
@@ -110,7 +165,7 @@
     isNormalUser = true;
     home = "/home/chrism";
     description = "Chris McDonough";
-    extraGroups = ["wheel" "networkmanager"];
+    extraGroups = ["wheel" "networkmanager" "gpio"];
     # ! Be sure to put your own public key here
     openssh = {
       authorizedKeys.keys = [
@@ -126,36 +181,29 @@
   # ! Be sure to change the autologinUser.
   services.getty.autologinUser = "chrism";
 
- environment.systemPackages = with pkgs; [
+  environment.systemPackages = with pkgs; [
+    libraspberrypi
+    raspberrypi-eeprom
     htop
     vim
-    # emacs
-    # ripgrep
-    # btop
-    # (python311.withPackages (p:
-    #   with p; [
-    #     python311Packages.rpi-gpio
-    #     python311Packages.gpiozero
-    #     python311Packages.pyserial
-    #   ]))
-    # usbutils
-    # tmux
-    # git
-    # dig
-    # tree
-    # bintools
-    # lsof
-    # pre-commit
-    # file
-    # bat
-    # ethtool
-    # minicom
-    # fast-cli
-    # nmap
-    # openssl
-    # dtc
-    # zstd
-    # neofetch
+    emacs
+    ripgrep
+    btop
+    python_with_packages
+    usbutils
+    tmux
+    git
+    lsof
+    bat
+    alsa-utils # aplay
+    dig
+    tree
+    bintools
+    file
+    ethtool
+    minicom
+    pjsip
+    # asterisk
   ];
 
 }
