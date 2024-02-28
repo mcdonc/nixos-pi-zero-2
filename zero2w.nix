@@ -68,9 +68,6 @@
     swraid.enable = lib.mkForce false;
   };
 
-  networking = {
-  };
-
   services.dnsmasq.enable = true;
   
   networking = {
