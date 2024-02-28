@@ -14,6 +14,9 @@
   nix.settings.trusted-users = ["@wheel"];
   system.stateVersion = "24.05";
 
+  # don't build the NixOS docs locally
+  documentation.nixos.enable = false;
+
   services.zram-generator = {
     enable = true;
     settings.zram0 = {
