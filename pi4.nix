@@ -2,17 +2,19 @@
   lib,
   modulesPath,
   pkgs,
+  nixos-hardware,
   ...
 }:
 {
   imports = [
     ./sd-image.nix
+    "${nixos-hardware}/raspberry-pi/4"
     ./common.nix
   ];
 
   sdImage = {
     compressImage = false;
-    imageName = "zero2.img";
+    imageName = "pi4.img";
 
     extraFirmwareConfig = {
       # Give up VRAM for more Free System Memory
@@ -30,12 +32,20 @@
     };
   };
 
+  hardware = {
+    raspberry-pi."4".apply-overlays-dtmerge.enable = true;
+    deviceTree = {
+      enable = true;
+      filter = "*rpi-4-*.dtb";
+    };
+  };
+
   networking = {
-    #interfaces."wlan0".useDHCP = true;
+    interfaces.end0.useDHCP = true;
     interfaces.wlan0 = {
       ipv4.addresses = [
         {
-          address = "192.168.1.172";
+          address = "192.168.1.171";
           prefixLength = 24;
         }
       ];
@@ -58,5 +68,6 @@
       };
     };
   };
+
 
 }
