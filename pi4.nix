@@ -8,13 +8,13 @@
 {
   imports = [
     ./sd-image.nix
-    "${nixos-hardware}/raspberry-pi/4"
     ./common.nix
+    "${nixos-hardware}/raspberry-pi/4"
   ];
 
   sdImage = {
     compressImage = false;
-    imageName = "pi4.img";
+    imageName = "pi.img";
 
     extraFirmwareConfig = {
       # Give up VRAM for more Free System Memory
@@ -33,41 +33,15 @@
   };
 
   hardware = {
-    raspberry-pi."4".apply-overlays-dtmerge.enable = true;
+    raspberry-pi."4" = {
+      apply-overlays-dtmerge.enable = true;
+      fkms-3d.enable = true; # rudolf
+    };
     deviceTree = {
       enable = true;
-      filter = "*rpi-4-*.dtb";
     };
   };
 
-  networking = {
-    interfaces.end0.useDHCP = true;
-    interfaces.wlan0 = {
-      ipv4.addresses = [
-        {
-          address = "192.168.1.171";
-          prefixLength = 24;
-        }
-      ];
-    };
-    # dnsmasq reads /etc/resolv.conf to find 8.8.8.8 and 1.1.1.1
-    nameservers =  [ "127.0.0.1" "8.8.8.8" "1.1.1.1"];
-    useDHCP = false;
-    dhcpcd.enable = false;
-    defaultGateway = "192.168.1.1";
-    hostName = "locknix";
-    firewall.enable = false;
-    wireless = {
-      enable = true;
-      interfaces = ["wlan0"];
-      # ! Change the following to connect to your own network
-      networks = {
-        "ytvid-rpi" = { # SSID
-          psk = "ytvid-rpi"; # password
-        };
-      };
-    };
-  };
-
+  networking.hostName = "nixos-pi4";
 
 }

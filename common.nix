@@ -4,35 +4,11 @@
   ...
 }:
 let
-  breakonthru = pkgs.python3Packages.buildPythonPackage {
-    pname="breakonthru";
-    version="0.0";
-    src = pkgs.fetchFromGitHub {
-      owner = "mcdonc";
-      repo = "breakonthru";
-      rev = "00854bd73404f449db0eb5b21da517c07cc617a7";
-      sha256 = "sha256-52u9M05855AJ47Dk1+Fvc+VileaVsX6ClCdpn3N43eA=";
-    };
-  };
   python_with_packages = (pkgs.python311.withPackages (p:
     with p; [
       pkgs.python311Packages.rpi-gpio
       pkgs.python311Packages.gpiozero
       pkgs.python311Packages.pyserial
-      pkgs.python311Packages.plaster-pastedeploy
-      pkgs.python311Packages.pyramid
-      pkgs.python311Packages.pyramid-chameleon
-      pkgs.python311Packages.waitress
-      pkgs.python311Packages.bcrypt
-      pkgs.python311Packages.websockets
-      pkgs.python311Packages.gpiozero
-      pkgs.python311Packages.pexpect
-      pkgs.python311Packages.setproctitle
-      pkgs.python311Packages.requests
-      pkgs.python311Packages.websocket-client
-      pkgs.python311Packages.supervisor
-      pkgs.python311Packages.pjsua2
-      breakonthru
     ]));
 in
 {
@@ -73,8 +49,6 @@ in
   '';
 
   boot = {
-    initrd.availableKernelModules = ["xhci_pci" "usbhid" "usb_storage"];
-
     loader = {
       grub.enable = false;
       generic-extlinux-compatible.enable = true;
@@ -91,6 +65,35 @@ in
     swraid.enable = lib.mkForce false;
   };
 
+  sound.enable = true;
+
+  hardware.pulseaudio.enable = true;
+
+  systemd.services.btattach = {
+    before = [ "bluetooth.service" ];
+    after = [ "dev-ttyAMA0.device" ];
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      ExecStart = ''
+        ${pkgs.bluez}/bin/btattach -B /dev/ttyAMA0 -P bcm -S 3000000
+      '';
+    };
+  };
+
+  networking = {
+    useDHCP = true;
+    wireless = {
+      enable = true;
+      interfaces = ["wlan0"];
+      # ! Change the following to connect to your own network
+      networks = {
+        "ytvid-rpi" = { # SSID
+          psk = "ytvid-rpi"; # password
+        };
+      };
+    };
+  };
+
   services.dnsmasq.enable = true;
 
     # Enable OpenSSH out of the box.
@@ -104,7 +107,7 @@ in
     isNormalUser = true;
     home = "/home/chrism";
     description = "Chris McDonough";
-    extraGroups = ["wheel" "networkmanager" "gpio"];
+    extraGroups = ["wheel" "networkmanager" "gpio" "audio"];
     # ! Be sure to put your own public key here
     openssh = {
       authorizedKeys.keys = [
@@ -142,8 +145,7 @@ in
     file
     ethtool
     minicom
-    pjsip
-    # asterisk
+    bluez
   ];
 
 

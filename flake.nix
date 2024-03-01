@@ -34,7 +34,7 @@
             ./zero2w.nix
           ];
         };
-        locknix = nixpkgs.lib.nixosSystem {
+        pi4 = nixpkgs.lib.nixosSystem {
           inherit specialArgs;
           modules = [
             ({ config, pkgs, ... }: { nixpkgs.overlays = overlays; })
@@ -48,17 +48,17 @@
         user = "root";
         nodes = {
           zero2w = {
-            hostname = "zero2w";
+            hostname = "nix-zero2w";
             profiles.system.path =
               deploy-rs.lib.aarch64-linux.activate.nixos self.nixosConfigurations.zero2w;
             #deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.zero2w;
             #remoteBuild = true;
             
           };
-          locknix = {
-            hostname = "locknix";
+          pi4 = {
+            hostname = "nix-pi4";
             profiles.system.path =
-              deploy-rs.lib.aarch64-linux.activate.nixos self.nixosConfigurations.locknix;
+              deploy-rs.lib.aarch64-linux.activate.nixos self.nixosConfigurations.pi4;
             #deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.zero2w;
             #remoteBuild = true;
             
