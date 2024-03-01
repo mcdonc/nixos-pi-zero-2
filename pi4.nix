@@ -2,12 +2,14 @@
   lib,
   modulesPath,
   pkgs,
+  nixos-hardware,
   ...
 }:
 {
   imports = [
     ./sd-image.nix
     ./common.nix
+    "${nixos-hardware}/raspberry-pi/4"
   ];
 
   sdImage = {
@@ -30,14 +32,16 @@
     };
   };
 
-  # this is handled by nixos-hardware on Pi 4
-  boot = {
-    initrd.availableKernelModules = [
-      "usbhid"
-      "usb_storage"
-    ];
+  hardware = {
+    raspberry-pi."4" = {
+      apply-overlays-dtmerge.enable = true;
+      fkms-3d.enable = true; # rudolf
+    };
+    deviceTree = {
+      enable = true;
+    };
   };
 
-  networking.hostName = "nixos-zero2w";
+  networking.hostName = "nixos-pi4";
 
 }
