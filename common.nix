@@ -65,9 +65,9 @@ in
     swraid.enable = lib.mkForce false;
   };
 
-  sound.enable = true;
+  sound.enable = false;
 
-  hardware.pulseaudio.enable = true;
+  hardware.pulseaudio.enable = false;
 
   # systemd.services.btattach = {
   #   before = [ "bluetooth.service" ];
@@ -82,16 +82,6 @@ in
 
   networking = {
     useDHCP = true;
-    wireless = {
-      enable = true;
-      interfaces = ["wlan0"];
-      # ! Change the following to connect to your own network
-      networks = {
-        "ytvid-rpi" = { # SSID
-          psk = "ytvid-rpi"; # password
-        };
-      };
-    };
   };
 
   services.dnsmasq.enable = true;
@@ -129,22 +119,13 @@ in
     raspberrypi-eeprom
     htop
     vim
-    emacs
-    ripgrep
-    btop
-    python_with_packages
     usbutils
-    tmux
-    git
-    lsof
-    bat
-    alsa-utils # aplay
-    dig
-    tree
-    bintools
-    file
+    #lsof
+    #dig
+    #tree
+    #bintools
+    #file
     ethtool
-    minicom
   ];
 
 
