@@ -26,6 +26,14 @@
       };
     in rec {
       nixosConfigurations = {
+        zerow = nixpkgs.lib.nixosSystem {
+          inherit specialArgs;
+          modules = [
+            ({ config, pkgs, ... }: { nixpkgs.overlays = overlays; })
+            "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-armv7l-multiplatform.nix"
+            ./zerow.nix
+          ];
+        };
         zero2w = nixpkgs.lib.nixosSystem {
           inherit specialArgs;
           modules = [

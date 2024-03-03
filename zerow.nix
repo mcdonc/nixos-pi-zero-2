@@ -7,12 +7,12 @@
 {
   imports = [
     ./sd-image.nix
-    ./common-aarch64.nix
+    ./common.nix
   ];
 
   sdImage = {
     compressImage = false;
-    imageName = "pi02w.img";
+    imageName = "pi0.img";
 
     extraFirmwareConfig = {
       # Give up VRAM for more Free System Memory
@@ -38,6 +38,6 @@
     ];
   };
 
-  networking.hostName = "nixos-zero2w";
+  networking.hostName = "nixos-0w";
 
 }
