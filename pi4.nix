@@ -8,7 +8,7 @@
 {
   imports = [
     ./sd-image.nix
-    ./common.nix
+    ./common-aarch64.nix
     "${nixos-hardware}/raspberry-pi/4"
   ];
 
