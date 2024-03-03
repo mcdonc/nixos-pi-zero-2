@@ -12,7 +12,7 @@ let
     ]));
 in
 {
-  nixpkgs.hostPlatform.system = "aarch64-linux";
+  nixpkgs.hostPlatform.system = "armv7l-linux";
   nixpkgs.buildPlatform.system = "x86_64-linux";
   # ! Need a trusted user for deploy-rs.
   nix.settings.trusted-users = ["@wheel"];
