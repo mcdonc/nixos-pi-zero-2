@@ -7,12 +7,12 @@
 {
   imports = [
     ./sd-image.nix
-    ./common.nix
+    ./common-aarch64.nix
   ];
 
   sdImage = {
     compressImage = false;
-    imageName = "pi.img";
+    imageName = "pizw2.img";
 
     extraFirmwareConfig = {
       # Give up VRAM for more Free System Memory
