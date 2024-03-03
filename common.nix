@@ -12,6 +12,7 @@ let
     ]));
 in
 {
+  nixpkgs.config.allowBroken = true;
   nixpkgs.hostPlatform.system = "armv7l-linux";
   nixpkgs.buildPlatform.system = "x86_64-linux";
   # ! Need a trusted user for deploy-rs.
