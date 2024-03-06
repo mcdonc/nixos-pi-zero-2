@@ -113,7 +113,7 @@ in
   };
 
   # ! Be sure to change the autologinUser.
-  services.getty.autologinUser = "giezac";
+  # services.getty.autologinUser = "giezac";
 
   environment.systemPackages = with pkgs; [
     libraspberrypi
