@@ -30,7 +30,7 @@
           inherit specialArgs;
           modules = [
             ({ config, pkgs, ... }: { nixpkgs.overlays = overlays; })
-            "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-armv7l-multiplatform.nix"
+            "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-raspberrypi-installer.nix"
             ./zerow.nix
           ];
         };
