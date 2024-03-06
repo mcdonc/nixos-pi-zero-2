@@ -94,7 +94,7 @@ in
   services.timesyncd.enable = true;
 
   # ! Change the following configuration
-  users.users.chrism = {
+  users.users.giezac = {
     isNormalUser = true;
     home = "/home/giezac";
     description = "Me";
@@ -113,7 +113,7 @@ in
   };
 
   # ! Be sure to change the autologinUser.
-  services.getty.autologinUser = "giezac";
+  # services.getty.autologinUser = "giezac";
 
   environment.systemPackages = with pkgs; [
     libraspberrypi
