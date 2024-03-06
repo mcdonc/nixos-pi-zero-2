@@ -94,7 +94,7 @@ in
   services.timesyncd.enable = true;
 
   # ! Change the following configuration
-  users.users.chrism = {
+  users.users.giezac = {
     isNormalUser = true;
     home = "/home/giezac";
     description = "Me";
