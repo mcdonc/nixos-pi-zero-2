@@ -7,7 +7,7 @@
 {
   imports = [
     ./sd-image.nix
-    ./common-aarch64.nix
+    ./common-armv7l.nix
   ];
 
   sdImage = {

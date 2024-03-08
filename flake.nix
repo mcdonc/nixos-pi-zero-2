@@ -38,7 +38,7 @@
           inherit specialArgs;
           modules = [
             ({ config, pkgs, ... }: { nixpkgs.overlays = overlays; })
-            "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
+            "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-armv7l-multiplatform-installer.nix"
             ./zero2w.nix
           ];
         };
