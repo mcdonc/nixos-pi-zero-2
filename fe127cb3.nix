@@ -12,7 +12,7 @@
 
   sdImage = {
     compressImage = false;
-    imageName = "0fe12cb3.img";
+    imageName = "fe127cb3.img";
 
     extraFirmwareConfig = {
       # Give up VRAM for more Free System Memory
@@ -38,6 +38,6 @@
     ];
   };
 
-  networking.hostName = "0fe12cb3";
+  networking.hostName = "fe127cb3";
 
 }
