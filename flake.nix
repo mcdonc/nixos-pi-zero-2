@@ -50,11 +50,43 @@
             ./pi4.nix
           ];
         };
+        004f17e5 = nixpkgs.lib.nixosSystem {
+          inherit specialArgs;
+          modules = [
+            ({ config, pkgs, ... }: { nixpkgs.overlays = overlays; })
+            "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
+            ./004f17e5.nix
+          ];
+        };
+        fe127cb3 = nixpkgs.lib.nixosSystem {
+          inherit specialArgs;
+          modules = [
+            ({ config, pkgs, ... }: { nixpkgs.overlays = overlays; })
+            "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
+            ./fe127cb3.nix
+          ];
+        };
       };
           
       deploy = {
         user = "root";
         nodes = {
+          004f17e5 = {
+            hostname = "004f17e5";
+            profiles.system.path =
+              deploy-rs.lib.aarch64-linux.activate.nixos self.nixosConfigurations.004f17e5;
+            #deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.004f17e5;
+            #remoteBuild = true;
+            
+          };
+          fe127cb3 = {
+            hostname = "fe127cb3";
+            profiles.system.path =
+              deploy-rs.lib.aarch64-linux.activate.nixos self.nixosConfigurations.fe127cb3;
+            #deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.fe127cb3;
+            #remoteBuild = true;
+            
+          };
           zero2w = {
             hostname = "nix-zero2w";
             profiles.system.path =
