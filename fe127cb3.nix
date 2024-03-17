@@ -34,6 +34,9 @@
 
   # this is handled by nixos-hardware on Pi 4
   boot = {
+    kernelParams = [
+      "console=ttyS1,115200n8"
+    ];
     initrd.availableKernelModules = [
       "usbhid"
       "usb_storage"
