@@ -27,17 +27,37 @@
       # * See: https://elinux.org/RPi_Configuration
       hdmi_group = 2;
       hdmi_mode = 8;
+      ### usb gadget
+      dtoverlay=dwc2
     };
   };
 
   # this is handled by nixos-hardware on Pi 4
   boot = {
+    kernelParams = [
+      "console=ttyS1,115200n8"
+    ];
     initrd.availableKernelModules = [
       "usbhid"
       "usb_storage"
+      "libcomposite"
     ];
   };
 
   networking.hostName = "fe127cb3";
+
+  environment.systemPackages = with pkgs; [
+    libraspberrypi
+    raspberrypi-eeprom
+    htop
+    vim
+    usbutils
+    #lsof
+    #dig
+    #tree
+    #bintools
+    #file
+    ethtool
+  ];
 
 }
