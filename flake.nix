@@ -50,7 +50,7 @@
             ./pi4.nix
           ];
         };
-        004f17e5 = nixpkgs.lib.nixosSystem {
+         _004f17e5 = nixpkgs.lib.nixosSystem {
           inherit specialArgs;
           modules = [
             ({ config, pkgs, ... }: { nixpkgs.overlays = overlays; })
@@ -71,11 +71,11 @@
       deploy = {
         user = "root";
         nodes = {
-          004f17e5 = {
+          _004f17e5 = {
             hostname = "004f17e5";
             profiles.system.path =
-              deploy-rs.lib.aarch64-linux.activate.nixos self.nixosConfigurations.004f17e5;
-            #deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.004f17e5;
+              deploy-rs.lib.aarch64-linux.activate.nixos self.nixosConfigurations._004f17e5;
+            #deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations._004f17e5;
             #remoteBuild = true;
             
           };
