@@ -27,6 +27,8 @@
       # * See: https://elinux.org/RPi_Configuration
       hdmi_group = 2;
       hdmi_mode = 8;
+      ### usb gadget
+      dtoverlay=dwc2
     };
   };
 
