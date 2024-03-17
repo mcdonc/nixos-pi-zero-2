@@ -46,4 +46,18 @@
 
   networking.hostName = "fe127cb3";
 
+  environment.systemPackages = with pkgs; [
+    libraspberrypi
+    raspberrypi-eeprom
+    htop
+    vim
+    usbutils
+    #lsof
+    #dig
+    #tree
+    #bintools
+    #file
+    ethtool
+  ];
+
 }
