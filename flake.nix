@@ -76,14 +76,14 @@
             hostname = "004f17e5";
             profiles.system.path =
               deploy-rs.lib.aarch64-linux.activate.nixos self.nixosConfigurations._004f17e5;
-            remoteBuild = true;
+            #remoteBuild = true;
             
           };
           fe127cb3 = {
             hostname = "fe127cb3";
             profiles.system.path =
               deploy-rs.lib.aarch64-linux.activate.nixos self.nixosConfigurations.fe127cb3;
-            remoteBuild = true;
+            #remoteBuild = true;
             
           };
           zero2w = {
