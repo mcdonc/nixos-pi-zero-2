@@ -70,6 +70,7 @@
           
       deploy = {
         user = "root";
+        sshOpts = [ "-i" "/home/giezac/.ssh/pzw2.rsa" ];
         nodes = {
           _004f17e5 = {
             hostname = "004f17e5";
