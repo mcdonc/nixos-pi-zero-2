@@ -48,10 +48,9 @@
   hardware.raspberry-pi."4".dwc2.enable = true;
 
   networking = {
-    hostName = hostname;
     hosts = {
-      "127.0.0.1" = [ "mobile.domain.local" ];
-      "10.213.0.1" = [ "mobile.domain.local" ];
+      "127.0.0.1" = [ "fe127cb3.local" ];
+      "10.213.0.1" = [ "fe127cb3.local" ];
     };
     interfaces.usb0.ipv4.addresses = [
       {
