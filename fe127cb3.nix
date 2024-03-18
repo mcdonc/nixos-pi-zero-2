@@ -28,7 +28,7 @@
       hdmi_group = 2;
       hdmi_mode = 8;
       ### usb gadget
-      dtoverlay=dwc2;
+      #dtoverlay=dwc2;
     };
   };
 
@@ -45,38 +45,39 @@
   };
 
   networking.hostName = "fe127cb3";
-  hardware.raspberry-pi."4".dwc2.enable = true;
+  #hardware.raspberry-pi."4".dwc2.enable = true;
 
   networking = {
     hosts = {
       "127.0.0.1" = [ "fe127cb3.local" ];
       "10.213.0.1" = [ "fe127cb3.local" ];
     };
-    interfaces.usb0.ipv4.addresses = [
-      {
-        address = "10.213.0.1";
-        prefixLength = 24;
-      }
-    ];
+    #interfaces.usb0.ipv4.addresses = [
+    #  {
+    #    address = "10.213.0.1";
+    #    prefixLength = 24;
+    #  }
+    #];
   };
 
-  networking.dhcpcd.denyInterfaces = [ "usb0" ];
+  #networking.dhcpcd.denyInterfaces = [ "usb0" ];
 
-  services.dhcpd4 = {
-    enable = true;
-    interfaces = [ "usb0" ];
-    extraConfig = ''
-      option domain-name "domain.mobile";
-      option subnet-mask 255.255.255.0;
-      option broadcast-address 10.213.0.255;
-      option domain-name-servers 9.9.9.9, 1.1.1.1;
-      option routers 10.213.0.1;
-      subnet 10.213.0.0 netmask 255.255.255.0 {
-        range 10.213.0.100 10.213.0.200;
-      }
-    '';
-  };
+  #services.dhcpd4 = {
+  #  enable = true;
+  #  interfaces = [ "usb0" ];
+  #  extraConfig = ''
+  #    option domain-name "domain.mobile";
+  #    option subnet-mask 255.255.255.0;
+  #    option broadcast-address 10.213.0.255;
+  #    option domain-name-servers 9.9.9.9, 1.1.1.1;
+  #    option routers 10.213.0.1;
+  #    subnet 10.213.0.0 netmask 255.255.255.0 {
+  #      range 10.213.0.100 10.213.0.200;
+  #    }
+  #  '';
+  #};
 
+  /*
   systemd.services."usb-otg" = {
     serviceConfig = {
       Type = "oneshot";
@@ -113,11 +114,11 @@
       ls /sys/class/udc > UDC
     '';
   };
-  systemd.services.dhcpd4.after = [ "usb-otg.service" ];
+  #systemd.services.dhcpd4.after = [ "usb-otg.service" ];
   systemd.services."network-addresses-usb0".after = [ "usb-otg.service" ];
+  */
 
-
-  services.dnsmasq.enable = true;
+  #services.dnsmasq.enable = true;
 
     # Enable OpenSSH out of the box.
   services.sshd.enable = true;
