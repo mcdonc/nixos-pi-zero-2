@@ -116,6 +116,37 @@
   systemd.services.dhcpd4.after = [ "usb-otg.service" ];
   systemd.services."network-addresses-usb0".after = [ "usb-otg.service" ];
 
+
+  services.dnsmasq.enable = true;
+
+    # Enable OpenSSH out of the box.
+  services.sshd.enable = true;
+
+  # NTP time sync.
+  services.timesyncd.enable = true;
+
+  # ! Change the following configuration
+  users.users.giezac = {
+    isNormalUser = true;
+    home = "/home/giezac";
+    description = "Me";
+    extraGroups = ["wheel" "networkmanager" "gpio" "audio"];
+    # ! Be sure to put your own public key here
+    openssh = {
+      authorizedKeys.keys = [
+        "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCZawwmpdesq0ZvtXTdPekpjK3OYiPONrKO0no625FqYG8A8fZY++cxjG4my6HgmoaBrZiWvRJTa0WfTfw9Tzx9xt/FKrCB4bk9G33WP+RJNF7AEo3wkGGBLHzxp9bnhzzxdJOQCV67DRDxQNjMiR5S/bkSU+QYPDq+MLLx8mFz8lfzOSThVgDLjOj7lsRAJcrFDawsjZYHjsVBdDfCkjXGPKT7/c90k0BOvOjnOZ4vEn1w2s/Neq0rDTJYDUSmu9SzW/+WkM1rZa4GS5QGFMJVrI1Ow3X8tiUYpAp1oa0MyIpRkpuP39W+I6qaRBW4/+lyJYWsLP09hU7K2wT6OGap cool"
+      ];
+    };
+  };
+
+  security.sudo = {
+    enable = true;
+    wheelNeedsPassword = false;
+  };
+
+  # ! Be sure to change the autologinUser.
+  services.getty.autologinUser = "giezac";
+
   environment.systemPackages = with pkgs; [
     libraspberrypi
     raspberrypi-eeprom
