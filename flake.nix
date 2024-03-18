@@ -86,22 +86,6 @@
             #remoteBuild = true;
             
           };
-          zero2w = {
-            hostname = "nix-zero2w";
-            profiles.system.path =
-              deploy-rs.lib.aarch64-linux.activate.nixos self.nixosConfigurations.zero2w;
-            #deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.zero2w;
-            #remoteBuild = true;
-            
-          };
-          pi4 = {
-            hostname = "nix-pi4";
-            profiles.system.path =
-              deploy-rs.lib.aarch64-linux.activate.nixos self.nixosConfigurations.pi4;
-            #deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.zero2w;
-            #remoteBuild = true;
-            
-          };
         };
       };
     };
