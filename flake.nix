@@ -26,6 +26,7 @@
       };
     in rec {
       nixosConfigurations = {
+        /*
         zerow = nixpkgs.lib.nixosSystem {
           inherit specialArgs;
           modules = [
@@ -50,6 +51,7 @@
             ./pi4.nix
           ];
         };
+        */
          _004f17e5 = nixpkgs.lib.nixosSystem {
           inherit specialArgs;
           modules = [
