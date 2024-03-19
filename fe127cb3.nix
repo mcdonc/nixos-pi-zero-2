@@ -2,14 +2,12 @@
   lib,
   modulesPath,
   pkgs,
-  nixos-hardware,
   ...
 }:
 {
   imports = [
     ./sd-image.nix
     ./common-aarch64.nix
-    raspberry-pi/4
   ];
 
   sdImage = {
