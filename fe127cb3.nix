@@ -9,6 +9,7 @@
   imports = [
     ./sd-image.nix
     ./common-aarch64.nix
+    nixos-hardware/raspberry-pi/4
   ];
 
   sdImage = {
