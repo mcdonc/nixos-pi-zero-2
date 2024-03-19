@@ -45,7 +45,7 @@
   };
 
   networking.hostName = "fe127cb3";
-  hardware.raspberry-pi."4".dwc2.enable = true;
+  nixos-hardware.raspberry-pi."4".dwc2.enable = true;
 
   networking = {
     hosts = {
