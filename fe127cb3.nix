@@ -6,6 +6,7 @@
 }:
 {
   imports = [
+    <nixos-hardware/raspberry-pi>
     ./sd-image.nix
     ./common-aarch64.nix
   ];
