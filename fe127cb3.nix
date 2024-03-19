@@ -2,11 +2,12 @@
   lib,
   modulesPath,
   pkgs,
+  nixos-hardware,
   ...
 }:
 {
   imports = [
-    <nixos-hardware/raspberry-pi>
+    <nixos-hardware>
     ./sd-image.nix
     ./common-aarch64.nix
   ];
