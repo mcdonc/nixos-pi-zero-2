@@ -28,7 +28,7 @@
       hdmi_group = 2;
       hdmi_mode = 8;
       ### usb gadget
-      dtoverlay=dwc2;
+      #dtoverlay=dwc2;
     };
   };
 
@@ -45,7 +45,7 @@
   };
 
   networking.hostName = "fe127cb3";
-  #hardware.raspberry-pi."4".dwc2.enable = true;
+  hardware.raspberry-pi."4".dwc2.enable = true;
 
   networking = {
     hosts = {
