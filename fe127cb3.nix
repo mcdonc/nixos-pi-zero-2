@@ -8,6 +8,7 @@
   imports = [
     ./sd-image.nix
     ./common-aarch64.nix
+    .../nixos-hardware/raspberry-pi/4
   ];
 
   sdImage = {
@@ -45,7 +46,7 @@
   };
 
   networking.hostName = "fe127cb3";
-  nixos-hardware.raspberry-pi."4".dwc2.enable = true;
+  hardware.raspberry-pi."4".dwc2.enable = true;
 
   networking = {
     hosts = {
