@@ -68,12 +68,27 @@
             ./fe127cb3.nix
           ];
         };
+        _04a91ec3 = nixpkgs.lib.nixosSystem {
+          inherit specialArgs;
+          modules = [
+            ({ config, pkgs, ... }: { nixpkgs.overlays = overlays; })
+            "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
+            ./04a91ec3.nix
+          ];
+        };
       };
           
       deploy = {
         user = "root";
         sshOpts = [ "-i" "/home/giezac/.ssh/pzw2.rsa" ];
         nodes = {
+          _04a91ec3 = {
+            hostname = "04a91ec3";
+            profiles.system.path =
+              deploy-rs.lib.aarch64-linux.activate.nixos self.nixosConfigurations._04a91ec3;
+            #remoteBuild = true;
+            
+          };
           _004f17e5 = {
             hostname = "004f17e5";
             profiles.system.path =
