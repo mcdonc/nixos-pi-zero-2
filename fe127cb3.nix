@@ -7,7 +7,7 @@
 }:
 {
   imports = [
-    <nixos-hardware>
+    nixos-hardware.url = "github:NixOS/nixos-hardware";
     ./sd-image.nix
     ./common-aarch64.nix
   ];
