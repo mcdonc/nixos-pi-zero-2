@@ -65,6 +65,7 @@
           modules = [
             ({ config, pkgs, ... }: { nixpkgs.overlays = overlays; })
             "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
+            nixos-hardware.nixosModules.raspberry-pi
             ./fe127cb3.nix
           ];
         };

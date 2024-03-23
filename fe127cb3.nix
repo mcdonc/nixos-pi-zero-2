@@ -7,7 +7,6 @@
 }:
 {
   imports = [
-    <nixos-hardware/raspbarry-pi/4>
     ./sd-image.nix
     ./common-aarch64.nix
   ];
