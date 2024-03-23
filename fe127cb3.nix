@@ -7,7 +7,7 @@
 }:
 {
   imports = [
-    nixos-hardware.url = "github:NixOS/nixos-hardware";
+    <nixos-hardware/raspbarry-pi/4>
     ./sd-image.nix
     ./common-aarch64.nix
   ];
