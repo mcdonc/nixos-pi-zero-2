@@ -77,7 +77,6 @@
       log-dhcp = true;
       no-poll = true;
       interfaces = [ "usb0" ];
-      domain-needed = true;
       dhcp-range = [ "172.16.1.2,172.16.1.253" ];
     };
   };
