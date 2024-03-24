@@ -63,7 +63,7 @@
 
   networking.dhcpcd.denyInterfaces = [ "usb0" ];
 
-
+/*
   services.dnsmasq = {
     enable = true;
     resolveLocalQueries = false;
@@ -81,7 +81,7 @@
       dhcp-range = [ "172.16.1.2,172.16.1.253" ];
     };
   };
-
+*/
   
   systemd.services."usb-otg" = {
     serviceConfig = {
@@ -119,7 +119,7 @@
       ls /sys/class/udc > UDC
     '';
   };
-  systemd.services.dnsmasq.after = [ "usb-otg.service" ];
+  #systemd.services.dnsmasq.after = [ "usb-otg.service" ];
   systemd.services."network-addresses-usb0".after = [ "usb-otg.service" ];
   
 
