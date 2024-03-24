@@ -63,20 +63,24 @@
 
   #networking.dhcpcd.denyInterfaces = [ "usb0" ];
 
-  #services.dhcpd4 = {
-  #  enable = true;
-  #  interfaces = [ "usb0" ];
-  #  extraConfig = ''
-  #    option domain-name "domain.mobile";
-  #    option subnet-mask 255.255.255.0;
-  #    option broadcast-address 10.213.0.255;
-  #    option domain-name-servers 9.9.9.9, 1.1.1.1;
-  #    option routers 10.213.0.1;
-  #    subnet 10.213.0.0 netmask 255.255.255.0 {
-  #      range 10.213.0.100 10.213.0.200;
-  #    }
-  #  '';
-  #};
+  services.dnsmasq = {
+    enable = true;
+    resolveLocalQueries = false;
+    settings = {
+      dhcp-authoritative = true;
+      bind-interfaces = true;
+      domain-needed = true;
+      expand-hosts = true;
+      bogus-priv = true;
+      no-resolv = true;
+      no-hosts = true;
+      log-dhcp = true;
+      no-poll = true;
+      interfaces = [ "usb0" ];
+      domain-needed = true;
+      dhcp-range = [ "172.16.1.2,172.16.1.253" ];
+    };
+  };
 
   /*
   systemd.services."usb-otg" = {
@@ -152,6 +156,7 @@
   environment.systemPackages = with pkgs; [
     libraspberrypi
     raspberrypi-eeprom
+    dnsmasq
     htop
     vim
     usbutils
