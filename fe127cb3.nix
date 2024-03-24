@@ -63,7 +63,7 @@
 
   #networking.dhcpcd.denyInterfaces = [ "usb0" ];
 
-/*
+
   services.dnsmasq = {
     enable = true;
     resolveLocalQueries = false;
@@ -81,7 +81,7 @@
       dhcp-range = [ "172.16.1.2,172.16.1.253" ];
     };
   };
-*/
+
   
   systemd.services."usb-otg" = {
     serviceConfig = {
