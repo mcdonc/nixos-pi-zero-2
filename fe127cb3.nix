@@ -63,6 +63,7 @@
 
   #networking.dhcpcd.denyInterfaces = [ "usb0" ];
 
+/*
 
   services.dnsmasq = {
     enable = true;
@@ -122,7 +123,7 @@
   #systemd.services.dnsmasq.after = [ "usb-otg.service" ];
   systemd.services."network-addresses-usb0".after = [ "usb-otg.service" ];
   
-
+  */
 
     # Enable OpenSSH out of the box.
   services.sshd.enable = true;
