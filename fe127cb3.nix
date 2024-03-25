@@ -84,7 +84,8 @@
   };
 
 */
-  
+
+/*
   systemd.services."usb-otg" = {
     serviceConfig = {
       Type = "oneshot";
@@ -93,7 +94,7 @@
     wantedBy = [ "default.target" ];
     script = ''
       modprobe libcomposite
-      mkdir -p /sys/kernel/config/usb_gadget/fe127cb3
+      ${pkgs.coreutils}/bin/mkdir -p /sys/kernel/config/usb_gadget/fe127cb3
       cd /sys/kernel/config/usb_gadget/fe127cb3
       echo 0x1d6b > idVendor # Linux Foundation
       echo 0x0104 > idProduct # Multifunction Composite Gadget
@@ -102,7 +103,7 @@
       echo 0xEF > bDeviceClass
       echo 0x02 > bDeviceSubClass
       echo 0x01 > bDeviceProtocol
-      mkdir -p /sys/kernel/config/usb_gadget/fe127cb3/strings/0x409
+      ${pkgs.coreutils}/bin/mkdir -p /sys/kernel/config/usb_gadget/fe127cb3/strings/0x409
       echo "fedcba9876543211" > strings/0x409/serialnumber
       echo "TheWifiNinja" > strings/0x409/manufacturer
       echo "PI4 USB Device" > strings/0x409/product
@@ -125,7 +126,7 @@
   #systemd.services.dnsmasq.after = [ "usb-otg.service" ];
   systemd.services."network-addresses-usb0".after = [ "usb-otg.service" ];
   
-  
+  */
 
     # Enable OpenSSH out of the box.
   services.sshd.enable = true;
@@ -162,6 +163,8 @@
     htop
     vim
     usbutils
+    coreutils
+    nix-index
     k3s_1_26
     ethtool
   ];
