@@ -115,7 +115,7 @@
       # End functions
       ${pkgs.coreutils}/bin/mkdir -p /sys/kernel/config/usb_gadget/fe127cb3/functions/ecm.usb0
       HOST="00:dc:c8:f7:75:14" # "HostPC"
-      SELF="00:dd:dc:eb:6d:a1" # "BadUSB"
+      SELF="b8:27:eb:12:7c:b3" # "00000000fe127cb3 / smsc95xx.macaddr=B8:27:EB:12:7C:B3"
       echo $HOST > functions/ecm.usb0/host_addr
       echo $SELF > functions/ecm.usb0/dev_addr
       ln -s functions/ecm.usb0 configs/c.1/
