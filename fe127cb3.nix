@@ -92,6 +92,7 @@
     };
     wantedBy = [ "default.target" ];
     script = ''
+      modprobe libcomposite
       mkdir -p /sys/kernel/config/usb_gadget/fe127cb3
       cd /sys/kernel/config/usb_gadget/fe127cb3
       echo 0x1d6b > idVendor # Linux Foundation
