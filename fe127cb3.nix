@@ -83,6 +83,7 @@
     };
   };
 
+*/
   
   systemd.services."usb-otg" = {
     serviceConfig = {
@@ -123,7 +124,7 @@
   #systemd.services.dnsmasq.after = [ "usb-otg.service" ];
   systemd.services."network-addresses-usb0".after = [ "usb-otg.service" ];
   
-  */
+  
 
     # Enable OpenSSH out of the box.
   services.sshd.enable = true;
