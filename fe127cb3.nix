@@ -61,7 +61,7 @@
     ];
   };
 
-  #networking.dhcpcd.denyInterfaces = [ "usb0" ];
+  networking.dhcpcd.denyInterfaces = [ "usb0" ];
 
 /*
 
