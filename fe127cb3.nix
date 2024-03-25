@@ -93,7 +93,7 @@
     };
     wantedBy = [ "default.target" ];
     script = ''
-      modprobe libcomposite
+      ${pkgs.kmod}/bin/modprobe libcomposite
       ${pkgs.coreutils}/bin/mkdir -p /sys/kernel/config/usb_gadget/fe127cb3
       cd /sys/kernel/config/usb_gadget/fe127cb3
       echo 0x1d6b > idVendor # Linux Foundation
@@ -164,7 +164,7 @@
     vim
     usbutils
     coreutils
-    nix-index
+    kmod
     k3s_1_26
     ethtool
   ];
