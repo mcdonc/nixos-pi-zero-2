@@ -63,9 +63,8 @@
         fe127cb3 = nixpkgs.lib.nixosSystem {
           inherit specialArgs;
           modules = [
-            ({ config, pkgs, nixos-hardware, ... }: { nixpkgs.overlays = overlays; })
+            ({ config, pkgs, ... }: { nixpkgs.overlays = overlays; })
             "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
-            nixos-hardware.nixosModules.raspberry-pi-4
             ./fe127cb3.nix
           ];
         };
