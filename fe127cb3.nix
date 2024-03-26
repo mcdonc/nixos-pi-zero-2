@@ -2,7 +2,6 @@
   lib,
   modulesPath,
   pkgs,
-  nixos-hardware,
   ...
 }:
 {
